@@ -1,0 +1,29 @@
+makeCacheMatrix <- function( x = matrix()) {
+	list (
+		set = function(y)	{
+			x <<- y
+			invmtx <<- NULL
+		},
+		get = function() x
+		,
+		setinvmtx = function(inverse) invmtx <<- inverse
+		,
+		getinvmtx = function() invmtx
+	)
+}
+
+
+
+cacheSolve <- function(x,...) {
+	
+	invmtx <- x$getinvmtx()
+	if ( !is.null(invmtx) ) {
+		print(" Getting the value from Cache")
+		return(invmtx)
+	}
+	data <- x$get()
+	inverse <- solve(data)
+	x$setinvmtx(inverse)
+	print("Calculating the inverse not taking from cache")
+	inverse
+}	
